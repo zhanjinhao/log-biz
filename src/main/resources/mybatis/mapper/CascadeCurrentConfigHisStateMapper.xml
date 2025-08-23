@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.addenda.biz.log.mapper.CascadeCurrentConfigHisStateMapper">
+  <resultMap type="cn.addenda.biz.log.entity.CascadeCurrentConfigHisState" id="CascadeCurrentConfigHisStateMap">
+    <id property="id" column="id" jdbcType="BIGINT"/>
+  </resultMap>
+
+  <sql id="allColumn">
+    `id`, `state_id`, `cascade_current_config_id`, `code`, `name`, `log_group`, `log_snapshot_id`, `if_log`, `foreign_id`, `foreign_log_snapshot_id`,
+    `creator`, `creator_name`, `create_time`, `modifier`, `modifier_name`, `modify_time`
+  </sql>
+
+  <sql id="setCondition">
+    <if test="stateId != null">
+      `state_id` = #{stateId,jdbcType=VARCHAR},
+    </if>
+    <if test="cascadeCurrentConfigId != null">
+      `cascade_current_config_id` = #{cascadeCurrentConfigId,jdbcType=BIGINT},
+    </if>
+    <if test="code != null">
+      `code` = #{code,jdbcType=VARCHAR},
+    </if>
+    <if test="name != null">
+      `name` = #{name,jdbcType=VARCHAR},
+    </if>
+    <if test="logGroup != null">
+      `log_group` = #{logGroup,jdbcType=VARCHAR},
+    </if>
+    <if test="logSnapshotId != null">
+      `log_snapshot_id` = #{logSnapshotId,jdbcType=VARCHAR},
+    </if>
+    <if test="ifLog != null">
+      `if_log` = #{ifLog,jdbcType=INTEGER},
+    </if>
+    <if test="foreignId != null">
+      `foreign_id` = #{foreignId,jdbcType=BIGINT},
+    </if>
+    <if test="foreignLogSnapshotId != null">
+      `foreign_log_snapshot_id` = #{foreignLogSnapshotId,jdbcType=VARCHAR},
+    </if>
+  </sql>
+
+  <sql id="queryCondition">
+    <if test="id != null">
+      and `id` = #{id,jdbcType=BIGINT}
+    </if>
+    <if test="stateId != null">
+      and `state_id` = #{stateId,jdbcType=VARCHAR}
+    </if>
+    <if test="cascadeCurrentConfigId != null">
+      and `cascade_current_config_id` = #{cascadeCurrentConfigId,jdbcType=BIGINT}
+    </if>
+    <if test="code != null">
+      and `code` = #{code,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null">
+      and `name` = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="logGroup != null">
+      and `log_group` = #{logGroup,jdbcType=VARCHAR}
+    </if>
+    <if test="logSnapshotId != null">
+      and `log_snapshot_id` = #{logSnapshotId,jdbcType=VARCHAR}
+    </if>
+    <if test="ifLog != null">
+      and `if_log` = #{ifLog,jdbcType=INTEGER}
+    </if>
+    <if test="foreignId != null">
+      and `foreign_id` = #{foreignId,jdbcType=BIGINT}
+    </if>
+    <if test="foreignLogSnapshotId != null">
+      and `foreign_log_snapshot_id` = #{foreignLogSnapshotId,jdbcType=VARCHAR}
+    </if>
+  </sql>
+
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+    insert into t_cascade_current_config_his_state
+    <trim prefix="set" suffixOverrides=",">
+      `id` = #{id,jdbcType=BIGINT},
+      <include refid="setCondition"/>
+    </trim>
+  </insert>
+
+  <update id="updateById">
+    update t_cascade_current_config_his_state
+    <trim prefix="set" suffixOverrides=",">
+      <include refid="setCondition"/>
+    </trim>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteById">
+    delete
+    from t_cascade_current_config_his_state
+    where `id` = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByEntity">
+    delete from t_cascade_current_config_his_state
+    <trim prefix="where" prefixOverrides="and">
+      <include refid="queryCondition"/>
+    </trim>
+  </delete>
+
+  <select id="queryByEntity" resultMap="CascadeCurrentConfigHisStateMap">
+    select
+    <include refid="allColumn"/>
+    from t_cascade_current_config_his_state
+    <trim prefix="where" prefixOverrides="and">
+      <include refid="queryCondition"/>
+    </trim>
+  </select>
+
+  <select id="queryById" resultMap="CascadeCurrentConfigHisStateMap">
+    select
+    <include refid="allColumn"/>
+    from t_cascade_current_config_his_state
+    <trim prefix="where" prefixOverrides="and">
+      `id` = #{id,jdbcType=BIGINT}
+    </trim>
+  </select>
+
+  <select id="queryByIdList" resultMap="CascadeCurrentConfigHisStateMap">
+    select
+    <include refid="allColumn"/>
+    from t_cascade_current_config_his_state
+    <trim prefix="where" prefixOverrides="and">
+      `id` in
+      <foreach collection="idList" open="(" close=")" item="id" separator=",">
+        #{id,jdbcType=BIGINT}
+      </foreach>
+    </trim>
+  </select>
+
+  <select id="countByEntity" resultType="java.lang.Long">
+    select count(*) from t_cascade_current_config_his_state
+    <trim prefix="where" prefixOverrides="and">
+      <include refid="queryCondition"/>
+    </trim>
+  </select>
+
+</mapper>
